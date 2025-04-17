@@ -1,0 +1,13 @@
+Memory allocation: 1.57 ms
+Generating Mandelbrot set image 2560x1440...
+Progress: 0.0% (0.31 ms elapsed)Progress: 6.9% (29.98 ms elapsed)Progress: 13.9% (66.84 ms elapsed)Progress: 20.8% (219.54 ms elapsed)Progress: 27.8% (617.82 ms elapsed)Progress: 34.7% (1344.81 ms elapsed)Progress: 41.7% (2267.48 ms elapsed)Progress: 48.6% (3464.30 ms elapsed)Progress: 55.6% (4696.60 ms elapsed)Progress: 62.5% (5740.01 ms elapsed)Progress: 69.4% (6530.15 ms elapsed)Progress: 76.4% (7122.33 ms elapsed)Progress: 83.3% (7298.77 ms elapsed)Progress: 90.3% (7363.01 ms elapsed)Progress: 97.2% (7394.44 ms elapsed)
+Mandelbrot calculation: 7405.41 ms (497.80 pixels/ms)
+Image written to mandelbrot.ppm (1098.75 ms)
+Memory cleanup: 0.05 ms
+
+--- Performance Summary ---
+Total execution time: 8505.81 ms
+Rendering resolution: 2560 x 1440 (3686400 pixels)
+Maximum iterations: 1000
+Average rendering speed: 497.80 pixels/ms
+Average time per pixel: 0.002009 ms

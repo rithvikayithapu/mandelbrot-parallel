@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --job-name=mandelbrot_bench      # Job name
+#SBATCH --partition=normal               # Partition (queue) name, adjust as needed
+#SBATCH --nodes=1                        # Number of nodes
+#SBATCH --ntasks=1                       # Number of tasks (one for sequential job)
+#SBATCH --output=slurm-%j.out            # Output file (%j is job ID)
+#SBATCH --error=slurm-%j.err             # Error file
+
+# Compile the C code
+gcc -o mandelbrot mandelbrot.c -O3 -lm
+if [ $? -ne 0 ]; then
+    echo "Compilation failed"
+    exit 1
+fi
+
+# Run the program and redirect timing output to a file
+./mandelbrot > mandelbrot_timing_$SLURM_JOB_ID.txt
+
+# Move the output PPM file to a unique name
+mv mandelbrot.ppm mandelbrot_$SLURM_JOB_ID.ppm
+
+echo "Job completed. Output: mandelbrot_$SLURM_JOB_ID.ppm, Timing: mandelbrot_timing_$SLURM_JOB_ID.txt"
