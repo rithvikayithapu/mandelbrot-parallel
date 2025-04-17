@@ -253,7 +253,7 @@ int main(int argc, char* argv[]) {
            (WIDTH * HEIGHT) / (calc_time));
     
     // Write the image to file
-    write_ppm("mandelbrot_parallel.ppm", image_buffer);
+    write_ppm("mandelbrot_parallel.ppm");
     
     // Timing for memory cleanup
     double cleanup_start_time = get_time_ms();
