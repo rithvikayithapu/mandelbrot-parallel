@@ -1,0 +1,29 @@
+--- Mandelbrot CUDA Benchmark Results ---
+Job ID: 110804
+Node: c34
+GPU: NVIDIA GeForce RTX 2060 SUPER
+Date: Fri Apr 18 19:24:19 EDT 2025
+----------------------------------------
+Found 1 CUDA device(s)
+Device 0: NVIDIA GeForce RTX 2060 SUPER
+  Compute capability: 7.5
+  Multiprocessors: 34
+  Global memory: 7.61 GB
+  Max threads per block: 1024
+  Memory clock rate: 7001000 kHz
+  Memory bus width: 256 bits
+
+Color table initialization: 129.34 ms
+Grid dimensions: 160 x 90 blocks
+Block dimensions: 16 x 16 threads
+Total threads: 3686400
+
+CUDA kernel execution: 72.83 ms
+Device to host transfer: 2.07 ms
+Image written to mandelbrot_cuda_110804.ppm (222.96 ms)
+
+--- Performance Summary ---
+Image resolution: 2560 x 1440 (3686400 pixels)
+Maximum iterations: 1000
+Kernel execution: 72.83 ms (50.62 MPixels/sec)
+Total runtime: 552.96 ms (6.67 MPixels/sec)
