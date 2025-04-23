@@ -2,7 +2,7 @@
 #SBATCH --job-name=mandelbrot_omp        # Job name
 #SBATCH --partition=normal               # Partition (queue) name, adjust as needed
 #SBATCH --nodes=1                        # Number of nodes
-#SBATCH --ntasks=1                       # Number of tasks
+#SBATCH --ntasks=8                       # Number of tasks
 #SBATCH --output=slurm-%j.out            # Output file (%j is job ID)
 #SBATCH --error=slurm-%j.err             # Error file
 

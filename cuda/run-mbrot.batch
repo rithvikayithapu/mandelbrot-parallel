@@ -1,0 +1,30 @@
+#!/bin/bash
+#SBATCH --job-name=mandelbrot_cuda       # Job name
+#SBATCH --partition=normal               # GPU partition
+#SBATCH --output=slurm-%j.out            # Output file (%j is job ID)
+#SBATCH --error=slurm-%j.err             # Error file
+
+echo "Running CUDA Mandelbrot on GPU"
+
+# Compile the CUDA code
+nvcc -O3 -std=c++11 -I./include/ -diag-suppress 177,2464 -o mandelbrot_cuda mandelbrot-cuda.cu
+if [ $? -ne 0 ]; then
+    echo "Compilation failed"
+    exit 1
+fi
+
+# Create results file
+RESULTS_FILE="mandelbrot_cuda_results_$SLURM_JOB_ID.txt"
+
+# Write system information to results file
+echo "--- Mandelbrot CUDA Benchmark Results ---" > $RESULTS_FILE
+echo "Job ID: $SLURM_JOB_ID" >> $RESULTS_FILE
+echo "Node: $SLURM_NODELIST" >> $RESULTS_FILE
+echo "GPU: $(nvidia-smi --query-gpu=gpu_name --format=csv,noheader 2>/dev/null || echo "GPU info unavailable")" >> $RESULTS_FILE
+echo "Date: $(date)" >> $RESULTS_FILE
+echo "----------------------------------------" >> $RESULTS_FILE
+
+# Run the program with 2560x1440 dimensions and redirect output to the results file
+./mandelbrot_cuda 2560 1440 mandelbrot_cuda_$SLURM_JOB_ID.ppm >> $RESULTS_FILE 2>&1
+
+echo "Job completed. Output: mandelbrot_cuda_$SLURM_JOB_ID.ppm, Results: $RESULTS_FILE"
