@@ -1,0 +1,55 @@
+#!/bin/bash
+#SBATCH --job-name=mandelbrot_mpi     # Job name
+#SBATCH --partition=normal            # Partition (queue) name
+#SBATCH --nodes=1                     # Number of nodes
+#SBATCH --ntasks=8                    # Number of MPI ranks
+#SBATCH --output=slurm-%j.out         # STDOUT (%j = job ID)
+#SBATCH --error=slurm-%j.err          # STDERR
+
+# Load modules if necessary (uncomment / adjust to your environment)
+# module load mpi
+# module load gcc
+
+
+echo "Job ID: $SLURM_JOB_ID"
+echo "Nodes: $SLURM_NODELIST"
+echo "MPI ranks: $SLURM_NTASKS"
+echo "Date: $(date)"
+echo "----------------------------------------"
+
+# Compile the MPI+OpenMP code
+mpicc mpi_mandelbrot.c -O3 -fopenmp -lm -o mpi_mandelbrot
+if [ $? -ne 0 ]; then
+    echo "Compilation failed" >&2
+    exit 1
+fi
+
+RESULTS_FILE="mandelbrot_mpi_results_${SLURM_JOB_ID}.txt"
+PPM_OUT="mandelbrot_mpi_${SLURM_JOB_ID}.ppm"
+
+# Header for results
+echo "--- MPI+OpenMP Mandelbrot Benchmark ---"     >  $RESULTS_FILE
+echo "Job ID:        $SLURM_JOB_ID"             >> $RESULTS_FILE
+echo "Node list:     $SLURM_NODELIST"           >> $RESULTS_FILE
+echo "MPI ranks:     $SLURM_NTASKS"             >> $RESULTS_FILE
+echo "Date:          $(date)"                   >> $RESULTS_FILE
+echo "----------------------------------------" >> $RESULTS_FILE
+
+# Run the program: adjust WIDTH HEIGHT as desired or pass via SBATCH parameters
+mpirun  ./mpi_mandelbrot 2560 1440 $PPM_OUT >> $RESULTS_FILE 2>&1
+
+# Check exit status
+if [ $? -ne 0 ]; then
+    echo "Execution failed" >&2
+    exit 2
+fi
+
+# Move or rename the PPM output
+if [ -f "$PPM_OUT" ]; then
+    echo "Image written to $PPM_OUT"           >> $RESULTS_FILE
+else
+    echo "Warning: PPM file not found!"        >> $RESULTS_FILE
+fi
+
+echo "Job completed successfully."            >> $RESULTS_FILE
+echo "Results in: $RESULTS_FILE"
