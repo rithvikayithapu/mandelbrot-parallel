@@ -1,0 +1,22 @@
+--- MPI+OpenMP Mandelbrot Benchmark ---
+Job ID:        117740
+Node list:     c34
+MPI ranks:     8
+Date:          Wed Apr 23 23:27:17 EDT 2025
+----------------------------------------
+
+--- MPI Mandelbrot Performance ---
+Ranks           : 8
+Image resolution: 2560 x 1440 (3686400 pixels)
+Max iterations  : 1000
+
+Initialization: 0.12 ms
+Computation   : 21.46 ms (171.76 MPixels/sec)
+Gather + I/O   : 884.55 ms
+  ‣ Gather     : 521.33 ms
+  ‣ Write PPM  : 363.22 ms
+
+Total runtime  : 906.14 ms
+Overall speed  : 4.07 MPixels/sec
+Image written to mandelbrot_mpi_117740.ppm
+Job completed successfully.
